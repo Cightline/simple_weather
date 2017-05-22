@@ -1,16 +1,25 @@
 
 import requests
 import os
+import os.path
 import json
 import re
 
 from pushbullet import Pushbullet
 
 home          = os.getenv('HOME')
+write_dir     = '%s/.simple_weather' % (home)
 config_path   = '%s/.config/simple_weather/config.json' % (home)
 
 with open(config_path, 'r') as cfg:
     config = json.load(cfg)
+
+
+
+if not os.path.exists(write_dir):
+    os.makedirs(write_dir)
+    print('created %s' % (write_dir))
+
 
 api_key         = config['api_key']
 state           = config['state']
@@ -39,7 +48,7 @@ def get_page(url):
 
 
 def write_to_file(name, data, lower=True):
-    with open('%s/.simple_weather/%s' % (home,name), 'w') as f:
+    with open('%s/%s' % (write_dir, name), 'w') as f:
 
         if lower:
             f.write(str(data).lower())
