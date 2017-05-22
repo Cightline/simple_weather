@@ -19,7 +19,8 @@ weather_dir     = '%s/.weather_watcher' % (home)
 values_to_write = config['values_to_write']
 #values_to_write = ['weather','temp_f', "precip_today_in"]
 # color for polybar
-polybar         = True
+polybar         = config['polybar']
+i3              = config['i3']
 
 alert_url       = 'http://api.wunderground.com/api/%s/alerts/q/%s/%s.json' % (api_key, state, city)
 condition_url   = 'http://api.wunderground.com/api/%s/conditions/q/%s/%s.json' % (api_key, state, city)
@@ -60,8 +61,7 @@ for value in values_to_write:
 a = get_page(alert_url)['alerts']
 
 if not a:
-    print('No alerts')
-    exit()
+    write_to_file('alerts', 'none')
 
 
 else:
@@ -72,7 +72,12 @@ else:
         alert_data.append(alert)
 
 
-    write_to_file(name, '/'.join(alert_data))
+    if polybar:
+        write_to_file('alerts', "%%{F#f00} %s" % ('/'.join(alert_data)))
+
+    elif i3:
+        write_to_file('alerts', "<span color='red'>%s</span>" % ('/'.join(alert_data)))
+
                 
 
 
