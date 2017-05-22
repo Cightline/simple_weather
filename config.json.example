@@ -1,0 +1,6 @@
+{
+    "api_key":"923091231203091",
+    "state":"TX",
+    "city":"Dallas",
+    "values_to_write":["weather","temp_f","precip_today_in"]
+}
