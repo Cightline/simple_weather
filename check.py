@@ -50,7 +50,8 @@ def write_to_file(name, data, lower=True):
 
 condition_data = get_page(condition_url)['current_observation']
 
-print(' '.join(condition_data.keys()))
+# Print the keys 
+#print(' '.join(condition_data.keys()))
 
 for value in values_to_write:
     write_to_file(value, condition_data[value])
