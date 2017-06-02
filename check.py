@@ -67,27 +67,22 @@ for value in values_to_write:
     write_to_file(value, condition_data[value])
 
 
-a = get_page(alert_url)['alerts']
 
-if not a:
-    write_to_file('alerts', 'none')
+alert_data = []
 
-
-else:
-    alert_data = []
-    data = (get_page(alert_url)['alerts'])
+data = (get_page(alert_url)['alerts'])
     
-    for alert in data:
-        alert_data.append(alert)
+for alert in data:
+    alert_data.append(alert['description'])
 
 
-    if polybar:
-        write_to_file('alerts', "%%{F#f00} %s" % ('/'.join(alert_data)))
+if polybar:
+    write_to_file('alerts', "%%{F#f00} %s" % ('/'.join(alert_data)), lower=False)
 
-    elif i3:
-        write_to_file('alerts', "<span color='red'>%s</span>" % ('/'.join(alert_data)))
+elif i3:
+    write_to_file('alerts', "<span color='red'>%s</span>" % ('/'.join(alert_data)))
 
-                
+            
 
 
 
